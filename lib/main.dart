@@ -1,4 +1,7 @@
+import 'package:cab_rider/screens/loginpage.dart';
 import 'package:cab_rider/screens/mainpage.dart';
+import 'package:cab_rider/screens/registrationpage.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -22,7 +25,25 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         fontFamily: 'Brand-Regular',
       ),
-      home: MainPage(),
+      initialRoute: assignScreen(),
+      routes: {
+        RegistrationPage.id: (context) => RegistrationPage(),
+        LoginPage.id: (context) => LoginPage(),
+        MainPage.id: (context) => MainPage(),
+      },
+      home: RegistrationPage(),
     );
+  }
+
+  String assignScreen() {
+    String id = LoginPage.id;
+    FirebaseAuth.instance.authStateChanges().listen((User? user) {
+      if (user == null) {
+        id = LoginPage.id;
+      } else {
+        id = MainPage.id;
+      }
+    });
+    return id;
   }
 }
