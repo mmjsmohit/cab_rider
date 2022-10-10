@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "776950903389",
+    "firebase_url": "https://cab-rider-4192f-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "cab-rider-4192f",
+    "storage_bucket": "cab-rider-4192f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:776950903389:android:c26d6dcca285bc057e93b4",
+        "android_client_info": {
+          "package_name": "com.example.cab_rider"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "776950903389-6gv5n4gqk8vki4be3sfl7foi8r2u49cd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDstLCEgPjXuLpeTpZykWDv83n3aF_Toew"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "776950903389-6gv5n4gqk8vki4be3sfl7foi8r2u49cd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
