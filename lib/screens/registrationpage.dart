@@ -1,5 +1,6 @@
 import 'package:cab_rider/screens/loginpage.dart';
 import 'package:cab_rider/screens/mainpage.dart';
+import 'package:cab_rider/widgets/ProgressDialog.dart';
 import 'package:cab_rider/widgets/TaxiButton.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -33,10 +34,16 @@ class RegistrationPage extends StatelessWidget {
   final _auth = FirebaseAuth.instance;
 
   Future<void> registerUser(BuildContext context) async {
+    showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (BuildContext context) =>
+            ProgressDialog(status: 'Creating your account...'));
     final user = (await _auth
             .createUserWithEmailAndPassword(
                 email: emailController.text, password: passwordController.text)
             .catchError((ex) {
+      Navigator.pop(context);
       FirebaseAuthException thisEx = ex;
       print(thisEx.message);
       showSnackBar(thisEx.message!, context);

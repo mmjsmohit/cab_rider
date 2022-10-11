@@ -36,14 +36,13 @@ class MyApp extends StatelessWidget {
   }
 
   String assignScreen() {
+    var user = FirebaseAuth.instance.currentUser;
     String id = LoginPage.id;
-    FirebaseAuth.instance.authStateChanges().listen((User? user) {
-      if (user == null) {
-        id = LoginPage.id;
-      } else {
-        id = MainPage.id;
-      }
-    });
+    if (user == null) {
+      id = LoginPage.id;
+    } else {
+      id = MainPage.id;
+    }
     return id;
   }
 }

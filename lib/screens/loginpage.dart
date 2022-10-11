@@ -1,6 +1,7 @@
 import 'package:cab_rider/brand_colors.dart';
 import 'package:cab_rider/screens/mainpage.dart';
 import 'package:cab_rider/screens/registrationpage.dart';
+import 'package:cab_rider/widgets/ProgressDialog.dart';
 import 'package:cab_rider/widgets/TaxiButton.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -18,9 +19,29 @@ class _LoginPageState extends State<LoginPage> {
   var passwordController = TextEditingController();
 
   void login() async {
+    showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (BuildContext context) =>
+            ProgressDialog(status: 'Logging you in...'));
+
     //TODO: Implement Login Function to validate email and password.
+    final user = (await FirebaseAuth.instance
+            .signInWithEmailAndPassword(
+                email: emailController.text, password: passwordController.text)
+            .catchError((ex) {
+      Navigator.pop(context);
+      FirebaseAuthException thisEx = ex;
+      print(thisEx.message);
+      showSnackBar(thisEx.message!, context);
+    }))
+        .user;
 
     //TODO: Redirect User to MainPage after valid input.
+
+    if (user != null) {
+      Navigator.pushNamedAndRemoveUntil(context, MainPage.id, (route) => false);
+    }
   }
 
   @override
@@ -51,6 +72,7 @@ class _LoginPageState extends State<LoginPage> {
                   child: Column(
                     children: [
                       TextField(
+                        controller: emailController,
                         keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(
                             labelText: 'Email Address',
@@ -63,6 +85,7 @@ class _LoginPageState extends State<LoginPage> {
                         height: 10.0,
                       ),
                       TextField(
+                        controller: passwordController,
                         obscureText: true,
                         decoration: InputDecoration(
                             labelText: 'Password',
@@ -96,5 +119,16 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
+  }
+
+  void showSnackBar(String title, BuildContext context) {
+    final snackBar = SnackBar(
+      content: Text(
+        title,
+        textAlign: TextAlign.center,
+        style: TextStyle(fontSize: 15.0),
+      ),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 }
